@@ -5,7 +5,9 @@ export default class DiscordBot {
   private token: string;
   
 
-  constructor(token: string) {
+  constructor(token: string | undefined) {
+    if (!token) throw new Error('Discord token not found');
+
     this.client = new Client();
     this.token = token;
   }
