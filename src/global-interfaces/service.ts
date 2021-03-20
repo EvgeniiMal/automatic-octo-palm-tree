@@ -1,5 +1,5 @@
-import { Message } from 'discord.js';
+import { messageDTO } from './messageDTO';
 
 export interface IService {
-    handleMessage(message: Message): Promise<void>
+    handleMessage(message: messageDTO): unknown
 }

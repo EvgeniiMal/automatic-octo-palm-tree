@@ -1,4 +1,4 @@
-import { Message } from 'discord.js';
+import { messageDTO } from './global-interfaces/messageDTO';
 import { IService } from './global-interfaces/service';
 
 
@@ -9,12 +9,11 @@ export default class Router {
     this.services.set(prefix, service);
   }
 
-  async routeCommand (message: Message): Promise<void> {
-    const { content } = message;
-    const [prefix, command, ...args] = content.split(' ');
-  
-      const service = this.services.get(prefix);
+  routeMessage (message: messageDTO): void {
+    const { prefix } = message;
 
-      service?.handleMessage(message);
+    const service = this.services.get(prefix);
+
+    service?.handleMessage(message);
   }
 }

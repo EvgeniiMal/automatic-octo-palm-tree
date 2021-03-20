@@ -4,6 +4,7 @@ import DiscordBot from './bot';
 import YotubePlayersService from './music/youtube/youtube.service';
 import Router from './router';
 import config from './config';
+import messageToDTO from './utils/messageToDTO';
 
 dotenv.config();
 
@@ -16,15 +17,17 @@ const client = bot.client;
 
 const prefixes = config.prefixes;
 
-router.registerService(prefixes.youtubePrefix , new YotubePlayersService())
+router.registerService(prefixes.youtubePrefix , new YotubePlayersService());
 
-bot.login().then(() => {
-  client.on('message', async (message) => {
+bot.login().then( async () => {
+  client.on('message', (message) => {
     if (message.author.bot) return;
+    const messageDTO = messageToDTO(message);
+  
     try {
-      router.routeCommand(message);
+      router.routeMessage(messageDTO);
     } catch (error) {
-      console.log(error);
+      console.log('Handle:', error);
     }
   });
 });
