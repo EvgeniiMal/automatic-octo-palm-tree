@@ -1,4 +1,4 @@
-import { GuildMember, Message, User } from "discord.js";
+import { GuildMember, Message, User } from 'discord.js';
 
 export interface messageDTO {
   prefix: string,

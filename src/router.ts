@@ -1,4 +1,5 @@
-import { messageDTO } from './global-interfaces/messageDTO';
+import { VoiceState } from 'discord.js';
+import { messageDTO } from './DTOs/messageDTO';
 import { IService } from './global-interfaces/service';
 
 
@@ -16,4 +17,10 @@ export default class Router {
 
     service?.handleMessage(message);
   }
+
+  updateVoiceState(oldState: VoiceState, newState: VoiceState): void {
+    for (const service of this.services.values()) {
+      service.updateUserVoiceState(oldState, newState);
+    }
+  } 
 }

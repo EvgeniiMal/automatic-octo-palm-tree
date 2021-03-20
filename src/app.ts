@@ -30,4 +30,17 @@ bot.login().then( async () => {
       console.log('Handle:', error);
     }
   });
+  
+  client.on('voiceStateUpdate', async (oldState, newState) => {
+    try {
+      await router.updateVoiceState(oldState, newState);
+    } catch (error) {
+      console.log('Handle:', error);
+    }
+  });
+});
+
+
+process.on('unhandledRejection', error => {
+  console.error('UNHANDLED:', error);
 });

@@ -4,7 +4,7 @@ import { IPlayer } from '../interfaces/player';
 
 export default class YoutubePlayer implements IPlayer {
   
-    readonly channel: VoiceChannel;
+    private channel: VoiceChannel;
     readonly owner: string;
     private dispatcher!: StreamDispatcher;
     private connection!: VoiceConnection; 

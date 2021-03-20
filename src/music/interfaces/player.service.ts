@@ -1,4 +1,3 @@
 import { IService } from '../../global-interfaces/service';
 
-export interface IPlayerService extends IService {
-}
+export type IPlayerService = IService

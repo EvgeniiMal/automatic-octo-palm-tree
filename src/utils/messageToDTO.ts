@@ -1,5 +1,5 @@
-import { Message } from "discord.js";
-import { messageDTO } from "../global-interfaces/messageDTO";
+import { Message } from 'discord.js';
+import { messageDTO } from '../DTOs/messageDTO';
 
 export default (message: Message): messageDTO => {
   const { content, member, author } = message;
@@ -9,11 +9,11 @@ export default (message: Message): messageDTO => {
   const [prefix, command, ...args] = content.split(' ');
 
   return {
-  prefix,
-  command,
-  args,
-  author,
-  member,
-  origin: message
-  }
-}
+    prefix,
+    command,
+    args,
+    author,
+    member,
+    origin: message
+  };
+};
