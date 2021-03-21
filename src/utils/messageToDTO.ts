@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { messageDTO } from '../DTOs/messageDTO';
+import { messageDTO } from '../dto/messageDTO';
 
 export default (message: Message): messageDTO => {
   const { content, member, author } = message;

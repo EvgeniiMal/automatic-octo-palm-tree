@@ -20,14 +20,15 @@ const prefixes = config.prefixes;
 router.registerService(prefixes.youtubePrefix , new YotubePlayersService());
 
 bot.login().then( async () => {
-  client.on('message', (message) => {
+  client.on('message', async (message) => {
     if (message.author.bot) return;
-    const messageDTO = messageToDTO(message);
   
     try {
-      router.routeMessage(messageDTO);
+      const messageDTO = messageToDTO(message);
+  
+      await router.routeMessage(messageDTO);
     } catch (error) {
-      console.log('Handle:', error);
+      message.channel.send(error.message);
     }
   });
   
@@ -42,5 +43,5 @@ bot.login().then( async () => {
 
 
 process.on('unhandledRejection', error => {
-  console.error('UNHANDLED:', error);
+  console.log('UNHANDLED REJECTION:', error);
 });

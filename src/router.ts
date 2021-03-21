@@ -1,5 +1,5 @@
 import { VoiceState } from 'discord.js';
-import { messageDTO } from './DTOs/messageDTO';
+import { messageDTO } from './dto/messageDTO';
 import { IService } from './global-interfaces/service';
 
 
@@ -10,12 +10,12 @@ export default class Router {
     this.services.set(prefix, service);
   }
 
-  routeMessage (message: messageDTO): void {
+  async routeMessage (message: messageDTO): Promise<void> {
     const { prefix } = message;
 
     const service = this.services.get(prefix);
 
-    service?.handleMessage(message);
+    await service?.handleMessage(message);
   }
 
   updateVoiceState(oldState: VoiceState, newState: VoiceState): void {

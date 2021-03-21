@@ -1,6 +1,6 @@
 import YoutubePlayer from './player';
 import { IPlayerService } from '../interfaces/player.service';
-import { messageDTO } from '../../DTOs/messageDTO';
+import { messageDTO } from '../../dto/messageDTO';
 import { commands } from '../commands/yt.player.commands';
 import { CommandName, ICommand } from '../interfaces/player.command';
 import { VoiceState } from 'discord.js';
@@ -14,33 +14,33 @@ export default class YotubePlayersService implements IPlayerService {
     this.commands = commands;
   }
   
-  updateUserVoiceState(oldState: VoiceState, newState: VoiceState): void {
+  async updateUserVoiceState(oldState: VoiceState, newState: VoiceState): Promise<void> {
     const userId = newState.id;
     const userPlayer = this.players.get(userId);
 
     if (!userPlayer) return;
     
-    userPlayer.stop();
+    await userPlayer.stop();
     this.players.delete(userId);
   }
 
-  handleMessage (message: messageDTO): void {
+  async handleMessage (message: messageDTO): Promise<void>{
     const { member, author, command, args } = message;
 
     const action = this.commands[command];
     const voiceChannel =  member?.voice.channel;
     const userId = author.id;
   
-    if(!voiceChannel || !command) return;
+    if(!voiceChannel || !action) return;
 
     const userPlayer = this.players.get(userId);
 
     if (userPlayer) {
-      action.execute(userPlayer, args);
+      await action.execute(userPlayer, args);
     } else {
       const userPlayer = new YoutubePlayer(voiceChannel, userId);
       this.players.set(userId, userPlayer);
-      action.execute(userPlayer, args);
+      await action.execute(userPlayer, args);
     }
     
   }
