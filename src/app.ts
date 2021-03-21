@@ -4,7 +4,8 @@ import DiscordBot from './bot';
 import YotubePlayersService from './music/youtube/youtube.service';
 import Router from './router';
 import config from './config';
-import messageToDTO from './utils/messageToDTO';
+import messageToDTO from './common/utils/messageToDTO';
+import { errorHandler } from './common/errors/error-handler';
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ bot.login().then( async () => {
   
       await router.routeMessage(messageDTO);
     } catch (error) {
-      message.channel.send(error.message);
+      errorHandler(error, message);
     }
   });
   

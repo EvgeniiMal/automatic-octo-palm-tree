@@ -15,7 +15,7 @@ export default class YoutubePlayer implements IPlayer {
     }
 
     async play (url: string): Promise<void> {
-      if (!url) return;
+      
       this.connection = await this.channel.join();
       this.dispatcher = this.connection.play(await ytdl(url), {type: 'opus', volume: 0.5, highWaterMark: 100 });
 

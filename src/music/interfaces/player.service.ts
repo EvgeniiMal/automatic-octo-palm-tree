@@ -1,3 +1,3 @@
-import { IService } from '../../global-interfaces/service';
+import { IService } from '../../common/global-interfaces/service';
 
 export type IPlayerService = IService

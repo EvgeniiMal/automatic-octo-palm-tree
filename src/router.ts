@@ -1,6 +1,6 @@
 import { VoiceState } from 'discord.js';
-import { messageDTO } from './dto/messageDTO';
-import { IService } from './global-interfaces/service';
+import { messageDTO } from './common/dto/messageDTO';
+import { IService } from './common/global-interfaces/service';
 
 
 export default class Router {
