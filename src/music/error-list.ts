@@ -19,3 +19,12 @@ export class BadVideoUrlError implements ICustomError {
     this.errorMessage = `${userId} send invalid yutube video URL`;
   }
 }
+export class channelAlreadyUsedError implements ICustomError {
+  readonly errorMessage;
+  readonly responseMessage;
+
+  constructor(userId: string) {
+    this.responseMessage = `<@${userId}>  Sorry, but channel already used`;
+    this.errorMessage = `${userId} failed to connect a channel, where the bot is exist`;
+  }
+}
