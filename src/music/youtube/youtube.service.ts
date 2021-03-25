@@ -4,8 +4,7 @@ import { messageDTO } from '../../common/dto/messageDTO';
 import { commands } from '../commands/yt.player.commands';
 import { CommandName, ICommand } from '../interfaces/player.command';
 import { VoiceState } from 'discord.js';
-import { BadVideoUrlError, NoVoiceChannelError } from '../error-list';
-import ytdl from 'ytdl-core-discord';
+import { NoVoiceChannelError } from '../error-list';
 
 
 export default class YotubePlayersService implements IPlayerService {
@@ -32,11 +31,9 @@ export default class YotubePlayersService implements IPlayerService {
     const action = this.commands[command];
     const voiceChannel =  member?.voice.channel;
     const userId = author.id;
-    const videoUrl = args[0];
   
     if(!voiceChannel) throw new NoVoiceChannelError(userId);
-    if(!action || !videoUrl) return;
-    if(!ytdl.validateURL(videoUrl)) throw new BadVideoUrlError(userId);
+    if(!action) return;
 
     const userPlayer = this.players.get(userId);
 

@@ -4,7 +4,8 @@
   "description": "Learn TS with simple dscord bot",
   "main": "app.ts",
   "scripts": {
-    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/app.ts"
+    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/app.ts",
+    "build": "xpx tsc --build"
   },
   "repository": {
     "type": "git",
