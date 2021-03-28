@@ -10,13 +10,13 @@ import { channelAlreadyUsedError, NoVoiceChannelError } from '../error-list';
 export default class YotubePlayersService implements IPlayerService {
   private players: Map<string, YoutubePlayer> = new Map();
   private commands: Record<CommandName, ICommand> = commands;
-  private activeChannels: Set<string> = new Set();
   
   async updateUserVoiceState(oldState: VoiceState, newState: VoiceState): Promise<void> {
-    const userId = newState.id;
+    const userId = oldState.id;
+    const oldChannelId = oldState.channelID;
     const userPlayer = this.players.get(userId);
 
-    if (!userPlayer) return;
+    if (!userPlayer || !oldChannelId) return;
     
     await userPlayer.stop();
     this.players.delete(userId);
@@ -31,16 +31,13 @@ export default class YotubePlayersService implements IPlayerService {
   
     if(!voiceChannel) throw new NoVoiceChannelError(userId);
     if(!action) return;
-    console.log(voiceChannel);
+
     const userPlayer = this.players.get(userId);
 
     if (userPlayer) {
       await action.execute(userPlayer, args);
     } else {
-      if(this.activeChannels.has(voiceChannel.id)) throw new channelAlreadyUsedError(userId);
-  
       const userPlayer = new YoutubePlayer(voiceChannel, userId);
-      this.activeChannels.add(voiceChannel.id);
       this.players.set(userId, userPlayer);
       await action.execute(userPlayer, args);
     }

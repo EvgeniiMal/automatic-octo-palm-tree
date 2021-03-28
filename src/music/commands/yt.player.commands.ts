@@ -1,10 +1,16 @@
+import { channelAlreadyUsedError } from '../error-list';
 import { CommandName, ICommand } from '../interfaces/player.command';
 
 
 export const commands: Record<CommandName, ICommand> = {
   'play': {
     name: 'play',
-    execute: async (player, args) => player.play(args[0]),
+    execute: async (player, args) => {
+      const channelMembers = player.channel.members;
+      const bot = channelMembers.find(member => member.user.bot);
+      if (bot) throw new channelAlreadyUsedError(player.owner);
+      player.play(args[0]);
+    },
   },
   'stop': {
     name: 'stop',
