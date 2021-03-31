@@ -17,7 +17,7 @@ export default class YotubePlayersService implements IPlayerService {
     const userPlayer = this.players.get(userId);
 
     if (!userPlayer || !oldChannelId) return;
-    
+
     await userPlayer.stop();
     this.players.delete(userId);
   }
@@ -34,6 +34,15 @@ export default class YotubePlayersService implements IPlayerService {
 
     const userPlayer = this.players.get(userId);
 
+    const channelMembers = voiceChannel.members;
+    const bot = channelMembers.find(member => member.user.bot);
+    console.log(bot);
+    if (bot) {
+      if (!userPlayer || bot?.voice.channelID !== userPlayer?.channel.id) {
+        throw new channelAlreadyUsedError(userId);
+      }
+    }
+
     if (userPlayer) {
       await action.execute(userPlayer, args);
     } else {
@@ -41,6 +50,5 @@ export default class YotubePlayersService implements IPlayerService {
       this.players.set(userId, userPlayer);
       await action.execute(userPlayer, args);
     }
-    
   }
 }
