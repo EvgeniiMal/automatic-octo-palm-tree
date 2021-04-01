@@ -14,9 +14,12 @@ export default class YotubePlayersService implements IPlayerService {
   async updateUserVoiceState(oldState: VoiceState, newState: VoiceState): Promise<void> {
     const userId = oldState.id;
     const oldChannelId = oldState.channelID;
+    const newChannel = newState.channelID;
     const userPlayer = this.players.get(userId);
 
-    if (!userPlayer || !oldChannelId) return;
+    console.log(oldState, newState);
+
+    if (!userPlayer || oldChannelId === newChannel) return;
 
     await userPlayer.stop();
     this.players.delete(userId);
