@@ -31,7 +31,11 @@ export default class YoutubePlayer implements IPlayer {
       
 
       this.connection = await this.channel.join();
-      this.dispatcher = this.connection.play(await ytdl(url), {type: 'opus', volume: 0.5, highWaterMark: 300 });
+      this.dispatcher = this.connection.play(await ytdl(url), {type: 'opus', volume: 0.5, highWaterMark: 150 });
+
+      if (process.env.NODE_ENV !== 'production') {
+        this.connection.on('debug', console.log);
+      }
 
       this.connection.on('error', (err) => console.error(`connection error: ${err}`));
 

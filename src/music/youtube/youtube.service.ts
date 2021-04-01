@@ -17,8 +17,6 @@ export default class YotubePlayersService implements IPlayerService {
     const newChannel = newState.channelID;
     const userPlayer = this.players.get(userId);
 
-    console.log(oldState, newState);
-
     if (!userPlayer || oldChannelId === newChannel) return;
 
     await userPlayer.stop();
@@ -39,7 +37,7 @@ export default class YotubePlayersService implements IPlayerService {
 
     const channelMembers = voiceChannel.members;
     const bot = channelMembers.find(member => member.user.bot);
-    console.log(bot);
+
     if (bot) {
       if (!userPlayer || bot?.voice.channelID !== userPlayer?.channel.id) {
         throw new channelAlreadyUsedError(userId);

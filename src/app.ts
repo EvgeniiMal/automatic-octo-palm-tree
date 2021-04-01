@@ -16,6 +16,10 @@ const bot = new DiscordBot(token);
 
 const client = bot.client;
 
+if (process.env.NODE_ENV !== 'production') {
+  client.on('debug', console.log);
+}
+
 const prefixes = config.prefixes;
 
 router.registerService(prefixes.youtubePrefix , new YotubePlayersService());
