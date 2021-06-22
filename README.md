@@ -1,2 +1,2 @@
-# automatic-octo-palm-tree
+# example ts music bot
 Learn TS with simple dscord bot
